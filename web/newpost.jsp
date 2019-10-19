@@ -23,7 +23,6 @@
 	<% /*java imports*/ %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 	
-	
 </head>
 <body>
 <%/*menu*/%>
@@ -36,9 +35,9 @@
 		
 		<%/*TODO implament catagories and get array from db*/ %>
 		Select a Category:&nbsp;
-		<select name="category">
+		<select>
 			<c:forEach items="${listCategory}" var="category">
-        		<option value="${category.id}">${category.name}</option>
+        		<option value="${category.getCatagoryID()}">${category.getCategoryTitle()}</option>
     		</c:forEach>
 		</select>
 		<br/>
