@@ -55,7 +55,7 @@ public class BlogPostDAO {
             while(rs.next()) {
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+                Date postDate = rs.getDate("postDate");
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");
@@ -74,6 +74,40 @@ public class BlogPostDAO {
         }
         return post;
     }
+
+    public void InsertPost(BlogPost blogPost) {
+        System.out.println("Inserting Post");
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "INSERT INTO post(postTitle, postDate, postAuthor, postContent,  postVisible, categoryId) VALUES (?,?,?,?,?,?);"; // TODO write sql insert command Error is on purpose so I don't forget what I was up to
+        //TODO write test to test insert and delete
+
+        try {
+            System.out.println("connecting to DB - insertPost");
+            connection = getConnection(); // connect to db
+            System.out.println("inserting data into prepared statment");
+            preparedStatement = connection.prepareStatement(sql);
+
+            /*ID - automatically created by mySQL*/
+            preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title");
+            preparedStatement.setObject(2, (blogPost.getPostDate()));	/*Date*/	System.out.println("inserted date");
+            preparedStatement.setString(3, blogPost.getPostAuthor());	/*Author*/	System.out.println("inserted Author");
+            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content");
+            preparedStatement.setBoolean(5, blogPost.getPostVisable()); /*Visible*/ System.out.println("inserted visabiltiy");
+            preparedStatement.setInt(6, blogPost.category.getCategoryID());		/*categoryID*/ System.out.println("inserted cat ID");
+
+            //execute the command
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            finallySQLException(connection, preparedStatement, resultSet);
+            e.printStackTrace();
+        }
+
+    } // end Insert
 
     // retrieve all posts and store it on an array list <BlogPost>
     public List <BlogPost> selectAllPosts(){
@@ -103,7 +137,9 @@ public class BlogPostDAO {
             while (rs.next()){
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+
+                java.sql.Date postDate = rs.getDate("postDate");
+
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");
@@ -138,14 +174,6 @@ public class BlogPostDAO {
         return blogPosts;
 
     } // end selectAllPosts
-
-
-
-
-
-
-
-
 
     private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {

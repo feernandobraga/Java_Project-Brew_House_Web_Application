@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet(name = "BlogServlet", value = "/BlogServlet")
@@ -99,8 +101,7 @@ public class BlogServlet extends HttpServlet {
 
         //get values from jsp and put into the bean
         post.setPostTitle(request.getParameter("title"));
-        LocalDate snapDate = LocalDate.now( ZoneId.of( "Australia/Melbourne" ) );
-        post.setPostDate(snapDate);//insert the date
+        post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
         post.setPostAuthor(request.getParameter("author"));
         post.setPostContent(request.getParameter("content"));
 
@@ -114,8 +115,8 @@ public class BlogServlet extends HttpServlet {
         }
 
         // insert bool "ticked into bean"
-        post.setPostVisible(ticked);
-        post.setCategoryID(request.getParameter("category"));
+        post.setPostVisable(ticked);
+        //TODO post.category.setCategoryID(request.getParameter("category"));
 
         //insert into database - DAO works, check jUnit
         BlogPostDAO blogPDAO = new BlogPostDAO();

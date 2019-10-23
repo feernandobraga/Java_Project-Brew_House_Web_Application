@@ -48,7 +48,7 @@ public class CategoryDAO {
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(INSERTCATSQL);
-            preparedStatement.setString(1, cat.getCname());
+            preparedStatement.setString(1, cat.getCategoryTitle());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
 

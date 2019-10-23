@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class BlogPost {
     private int postID;
     private String postTitle;
-    private LocalDate postDate;
+    private java.sql.Date postDate;
     private String postAuthor;
     private String postContent;
     private boolean isPostVisable;
 
-    //added categoryId and category Title by Lucy
-    private int categoryId;
-    private String categoryTitle;
+    // OLD "added categoryId and category Title by Lucy"
+    // refactored to Category (allows to reuse already created code)
+    public Category category = new Category();
 
     public BlogPost(){
 
@@ -20,15 +20,17 @@ public class BlogPost {
 
     //constructor for selectAllPosts in PostDAO
 
-    public BlogPost(int postID, String postTitle, LocalDate postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle) {
+    public BlogPost(int postID, String postTitle, java.sql.Date postDate, String postAuthor, String postContent, boolean isPostVisible, int categoryId, String categoryTitle) {
         this.postID = postID;
         this.postTitle = postTitle;
         this.postDate = postDate;
         this.postAuthor = postAuthor;
         this.postContent = postContent;
-        this.isPostVisable = isPostVisable;
-        this.categoryId = categoryId;
-        this.categoryTitle = categoryTitle;
+        this.isPostVisable = isPostVisible;
+
+        // set catergoy object
+        this.category.setCategoryID(categoryId);
+        this.category.setCategoryTitle(categoryTitle);
     }
 
     public int getPostID() {
@@ -44,20 +46,12 @@ public class BlogPost {
         this.postTitle = postTitle;
     }
 
-    public int getPostCategory() {
-        return postCategory;
-    }
-
-    public LocalDate getPostDate() {
+    public java.sql.Date getPostDate() {
         return postDate;
     }
 
-    public void setPostCategory(int postCategory) {
-        this.postCategory = postCategory;
-    }
-
     //Isaac updated setPostDate
-    public void setPostDate(LocalDate snapDate) {
+    public void setPostDate(java.sql.Date snapDate) {
         this.postDate = snapDate;
     }
 
@@ -70,29 +64,15 @@ public class BlogPost {
     public String getPostContent() {
         return postContent;
     }
+
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
-    public boolean isPostVisable() {
+    public boolean getPostVisable() {
         return isPostVisable;
     }
-    public void setPostVisable(boolean isPostVisable) {
+
+    public void setPostVisable(boolean isTicked) {
         this.isPostVisable = isPostVisable;
     }
-
-    //Added categoryId getter and setter to display in showPosts.jsp
-    public  int getCategoryId(){
-        return categoryId;
-    }
-    public void setCategoryId(int categoryId){
-        this.categoryId = categoryId;
-    }
-    //Added categoryTitle getter and setter
-    public String getCategoryTitle(){
-        return  categoryTitle;
-    }
-    public void setCategoryTitle(String categoryTitle){
-        this.categoryTitle = categoryTitle;
-    }
-
 }
