@@ -25,10 +25,10 @@
 	</head>
 	<body>
 		<h1>new Post</h1>
-		<form name="insertpost" method="post">
+		<form name="insertPost" method="post">
 			<h2>Title</h2> <input type="text" placeholder="Title" name="title"><br>
 			<textarea id="mytextarea"></textarea>
-	  		<p>Visible</p> <input type ="checkbox" name ="postvisability" checked = "checked"/>
+	  		<p>Visible</p> <input type ="checkbox" name ="postVariability" checked = "checked"/>
 		<input type="submit" value="submit">
 	  </form>
 	</body>

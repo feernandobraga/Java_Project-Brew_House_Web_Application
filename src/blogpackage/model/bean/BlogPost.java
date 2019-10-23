@@ -75,4 +75,14 @@ public class BlogPost {
     public void setPostVisable(boolean isTicked) {
         this.isPostVisable = isPostVisable;
     }
+
+    //displayALLToTerminal
+    public void displayPost() {
+        System.out.println(getPostTitle());
+        System.out.println(getPostDate());
+        System.out.println(getPostAuthor());
+        System.out.println(getPostContent());
+        System.out.println(getPostVisable());
+        System.out.println(category.getCategoryID());
+    }
 }
