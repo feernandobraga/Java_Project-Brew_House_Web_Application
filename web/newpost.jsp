@@ -11,16 +11,16 @@
 		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 		
 		<% /*import tinymce*/ %>
-		<script type="text/javascript" src="../../MainBeerBlog/Beer/WebContent/JS/JSLibraries/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src="JS/JSLibraries/tinymce/js/tinymce/tinymce.min.js"></script>
-		
-		
-		
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
 
+		<% /*tinymice config script*/ %>
 		<script type="text/javascript">
 		tinymce.init({
 			selector: '#mytextarea'
 		});
+
+
 		</script>
 	</head>
 	<body>
