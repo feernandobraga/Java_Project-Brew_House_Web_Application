@@ -91,11 +91,50 @@ public class BlogServlet extends HttpServlet {
         doPost(request, response);
     }
 
+    //Isaac
+    //TODO test
+    private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        //create bean object
+        BlogPost post = new BlogPost();
+
+        //get values from jsp and put into the bean
+        post.setPostTitle(request.getParameter("title"));
+        LocalDate snapDate = LocalDate.now( ZoneId.of( "Australia/Melbourne" ) );
+        post.setPostDate(snapDate);//insert the date
+        post.setPostAuthor(request.getParameter("author"));
+        post.setPostContent(request.getParameter("content"));
+
+        //check if the check box is ticked
+        boolean ticked = true;
+        if (request.getParameter("accidentalCover").equals("checked")) {
+            ticked = true;
+        }
+        else {
+            ticked = false;
+        }
+
+        // insert bool "ticked into bean"
+        post.setPostVisible(ticked);
+        post.setCategoryID(request.getParameter("category"));
+
+        //insert into database - DAO works, check jUnit
+        BlogPostDAO blogPDAO = new BlogPostDAO();
+        blogPDAO.InsertPost(post);
+
+        //redirect to admin page
+        response.sendRedirect("adminconsole.jsp");
+    } // END insert category
+
     private void insertCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String ctitle = request.getParameter("category");
         Category c = new Category(ctitle);
         catDAO.insertCategory(c);
         response.sendRedirect("main.jsp");
+    }
+
+    //Isaac
+    public void getAllCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        //TODO
     }
 
     private void editAboutUs(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{

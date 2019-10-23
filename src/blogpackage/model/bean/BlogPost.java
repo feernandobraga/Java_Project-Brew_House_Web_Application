@@ -1,9 +1,11 @@
 package blogpackage.model.bean;
 
+import java.time.LocalDate;
+
 public class BlogPost {
     private int postID;
     private String postTitle;
-    private String postDate;
+    private LocalDate postDate;
     private String postAuthor;
     private String postContent;
     private boolean isPostVisable;
@@ -18,7 +20,7 @@ public class BlogPost {
 
     //constructor for selectAllPosts in PostDAO
 
-    public BlogPost(int postID, String postTitle, String postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle) {
+    public BlogPost(int postID, String postTitle, LocalDate postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle) {
         this.postID = postID;
         this.postTitle = postTitle;
         this.postDate = postDate;
@@ -41,18 +43,24 @@ public class BlogPost {
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
-    /*public int getPostCategory() {
+
+    public int getPostCategory() {
         return postCategory;
     }
-    public void setPostCategory(int postCategory) {
-        this.postCategory = postCategory;
-    }*/
-    public String getPostDate() {
+
+    public LocalDate getPostDate() {
         return postDate;
     }
-    public void setPostDate(String postDate) {
-        this.postDate = postDate;
+
+    public void setPostCategory(int postCategory) {
+        this.postCategory = postCategory;
     }
+
+    //Isaac updated setPostDate
+    public void setPostDate(LocalDate snapDate) {
+        this.postDate = snapDate;
+    }
+
     public String getPostAuthor() {
         return postAuthor;
     }
