@@ -1,36 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 
-	<head>
-		<meta charset="ISO-8859-1">
-		<title>New Post</title>
-		
-		<% /*import jstl*/ %>
-		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-		
-		<% /*import tinymce*/ %>
-		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+	<!-- <script src="/js/bootstrap.min.js"></script> -->
+	<script src="https://kit.fontawesome.com/b4abea9736.js" crossorigin="anonymous"></script>
+	<%----%>
 
-		<% /*tinymice config script*/ %>
-		<script type="text/javascript">
+	<% /* import tiny mce */ %>
+	<script type="text/javascript" src="js/tinymce/jquery.tinymce.min.js"></script>
+	<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+
+	<script>
 		tinymce.init({
-			selector: '#mytextarea'
+			selector: 'textarea#default'
 		});
+	</script>
+	<%----%>
+
+	<%/*import JSTL*/%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%----%>
+
+</head>
+<body>
+	<%--Header imported from header.jsp--%>
+	<jsp:include page="header.jsp" />
+	<%----%>
+
+	<form action="/BlogServlet" method="post">
+		<input type="hidden" name="action" value="insertPost">
+		Post Title<input type="text" name="title" /></p>
+		post visible?<input type="checkbox" name="ticked" />
 
 
-		</script>
-	</head>
-	<body>
-		<h1>new Post</h1>
-		<form name="insertPost" method="post">
-			<h2>Title</h2> <input type="text" placeholder="Title" name="title"><br>
-			<textarea id="mytextarea"></textarea>
-	  		<p>Visible</p> <input type ="checkbox" name ="postVariability" checked = "checked"/>
-		<input type="submit" value="submit">
-	  </form>
-	</body>
+		<textarea id="default" name="content"></textarea>
+		<input type="submit" value="insert post">
+	</form>
+	<%--footer imported from footer.jsp--%>
+
+	<jsp:include page="footer.jsp" />
+</body>
+
 
 </html>

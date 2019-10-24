@@ -79,6 +79,14 @@ public class BlogServlet extends HttpServlet {
                     System.out.println("running from /test2");
                     break;
 
+                case "insertPost":
+                    System.out.println("insert post - servlet");
+                    insertPost(request,response);
+                    break;
+
+                case "selectAllCategories":
+                    System.out.println("Servlet - selectAllCategories");
+
                 default:
                     System.out.println("running the default from Servlet - switch(action)");
                     break;
@@ -99,32 +107,41 @@ public class BlogServlet extends HttpServlet {
         //create bean object
         BlogPost post = new BlogPost();
 
-        //get values from jsp and put into the bean
+        //TODO get values from jsp and put into the bean
         post.setPostTitle(request.getParameter("title"));
-        post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));//insert the date
         post.setPostAuthor(request.getParameter("author"));
         post.setPostContent(request.getParameter("content"));
 
         //check if the check box is ticked
         boolean ticked = true;
-        if (request.getParameter("accidentalCover").equals("checked")) {
+        if (request.getParameter("ticked").equals("checked")) {
             ticked = true;
         }
         else {
             ticked = false;
         }
-
-        // insert bool "ticked into bean"
         post.setPostVisable(ticked);
         //TODO post.category.setCategoryID(request.getParameter("category"));
+        post.displayPost();
 
         //insert into database - DAO works, check jUnit
+        System.out.println("inserting the post to database");
         BlogPostDAO blogPDAO = new BlogPostDAO();
         blogPDAO.InsertPost(post);
 
         //redirect to admin page
-        response.sendRedirect("adminconsole.jsp");
-    } // END insert category
+        System.out.println("redirecting the user to admin console");
+
+        try {
+            response.sendRedirect("admin.jsp");
+        }catch (Exception e) {
+            response.sendRedirect("home.jsp");
+        }finally {
+            System.out.println("attempted to send user to admin then home, both failed");
+        }
+
+    }
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String ctitle = request.getParameter("category");
@@ -134,8 +151,10 @@ public class BlogServlet extends HttpServlet {
     }
 
     //Isaac
-    public void getAllCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        //TODO
+    //TODO currently testing in test.jsp
+    public void getAllCategories(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        CategoryDAO catDAO = new CategoryDAO();
+        request.setAttribute("displayCategories", catDAO);
     }
 
     private void editAboutUs(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
@@ -167,8 +186,7 @@ public class BlogServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void showCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 
-    }
+
 
 } //end servlet
