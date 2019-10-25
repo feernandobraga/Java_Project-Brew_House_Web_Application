@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.spi.FileSystemProvider;
 import java.sql.SQLException;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class BlogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Servlet - Running doPost()");
 
-        //String action = request.getServletPath();
 
         // instead of getting the ServletPath we will be
         // getting the parameter action that is passed through by the form
@@ -87,12 +85,12 @@ public class BlogServlet extends HttpServlet {
                     insertPost(request,response);
                     break;
 
-                    /*
+
                 case "selectAllCategories":
                     System.out.println("Servlet - selectAllCategories");
                     getAllCategories(request,response);
                     break;
-                    */
+
 
 
                 default:
@@ -115,22 +113,30 @@ public class BlogServlet extends HttpServlet {
         //create bean object
         BlogPost post = new BlogPost();
 
+        System.out.println(1);
+
         //TODO get values from jsp and put into the bean
         post.setPostTitle(request.getParameter("title"));
         post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));/*insert the date*/
         post.setPostAuthor(request.getParameter("author"));
         post.setPostContent(request.getParameter("content"));
 
-
+        System.out.println(2);
         //check if the check box is ticked
         boolean ticked = true;
-        if (request.getParameter("ticked").equals("checked")) { ticked = true; }
-        else { ticked = false;
-        }
-        post.setPostVisable(ticked);        System.out.println("getting is visible?");
+        if (request.getParameter("ticked").equals("checked")) { ticked = false; } else { ticked = true; }
+        post.setPostVisable(ticked);
+        System.out.println(3);
 
-        // TODO fix ERROR
-        int categoryId = Integer.parseInt(request.getParameter("category"));
+        try {
+            System.out.println(Integer.parseInt(request.getParameter("category")));
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        int categoryId = 1;
+        categoryId = Integer.parseInt(request.getParameter("category"));
+        
         request.setAttribute("selectedCatId", categoryId);
 
 
@@ -163,7 +169,7 @@ public class BlogServlet extends HttpServlet {
     //TODO not currently using
     public void getAllCategories(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         CategoryDAO catDAO = new CategoryDAO();
-        request.setAttribute("displayCategories", catDAO.SelectAllCatagories());
+        request.setAttribute("displayCategories", catDAO.SelectAllCategories());
         RequestDispatcher dispatcher = request.getRequestDispatcher("newpost.jsp");
         dispatcher.forward(request, response);
         FileSystemProvider pageContext = null;

@@ -14,5 +14,18 @@
 </head>
 <body>
 
+    <form action="insertPost">
+        Post Title
+        <input type="text" name="title" /></p>
+
+        post visible?
+        <input type="checkbox" name="ticked" /> <br/>
+
+        <% /* use tinymce */ %>
+        <textarea id="default" name="content"></textarea> <br/>
+        <%----%>
+        <input type="submit" value="insert post">
+    </form>
+
 </body>
 </html>

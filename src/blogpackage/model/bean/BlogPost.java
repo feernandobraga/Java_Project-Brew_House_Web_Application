@@ -78,11 +78,14 @@ public class BlogPost {
 
     //displayALLToTerminal
     public void displayPost() {
-        System.out.println(getPostTitle());
-        System.out.println(getPostDate());
-        System.out.println(getPostAuthor());
-        System.out.println(getPostContent());
-        System.out.println(getPostVisable());
-        System.out.println(category.getCategoryID());
+
+        System.out.println("\n" + "displaypost");
+        System.out.println("Title: "+ getPostTitle());
+        System.out.println("date: "+ getPostDate());
+        System.out.println("author: "+ getPostAuthor());
+        System.out.println("content: "+ getPostContent());
+        System.out.println("visibility: "+ getPostVisable());
+        System.out.println("category ID: "+ category.getCategoryID());
+        System.out.println();
     }
 }

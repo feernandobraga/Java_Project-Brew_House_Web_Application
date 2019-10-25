@@ -39,10 +39,13 @@
 		post visible?<input type="checkbox" name="ticked" /> <br/>
 
 
-		<% /* load data from db to dropdown menu*/%>
-		<% CategoryDAO catDAO = new CategoryDAO();
-		request.setAttribute("AllCategories", catDAO.SelectAllCatagories());
-		%>
+		<% /* load data from db to dropdown menu*/
+		CategoryDAO catDAO = new CategoryDAO();
+		request.setAttribute("AllCategories", catDAO.SelectAllCategories());
+
+        %>
+
+		<%request.getParameter("selectAllCategories");%>
 
 		<% //TODO why did it crash? %>
 		<select name="category">

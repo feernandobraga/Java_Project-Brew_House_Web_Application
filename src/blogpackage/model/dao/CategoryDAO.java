@@ -61,7 +61,8 @@ public class CategoryDAO {
 
     //Isaac
     //selects all categories and inserts them into a list
-    public List<Category> SelectAllCatagories() {
+    public List<Category> SelectAllCategories() {
+        System.out.println("selecting all categories");
         // vars
         List<Category> allCat = new ArrayList<Category>();
         Connection connection = null;

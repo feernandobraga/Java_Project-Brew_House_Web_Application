@@ -27,6 +27,7 @@
     <form name="editCatAbout" action="category.jsp" method="get">
         <h3> <input type="submit" name="addCat" value="Add category"/></a> </h3>
         <h3> <input type="submit" name="about" value="Edit about us"/></a> </h3>
+
     </form>
 
     <!-- test button for about us page-->
