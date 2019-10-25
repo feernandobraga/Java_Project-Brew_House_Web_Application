@@ -36,17 +36,20 @@
 	<form action="/BlogServlet" method="post">
 		<input type="hidden" name="action" value="insertPost">
 		Post Title<input type="text" name="title" /></p>
-		post visible?<input type="checkbox" name="ticked" />
+		post visible?<input type="checkbox" name="ticked" /> <br/>
 
 
 		<% /* load data from db to dropdown menu*/%>
 		<% CategoryDAO catDAO = new CategoryDAO();
 		request.setAttribute("AllCategories", catDAO.SelectAllCatagories());
 		%>
-		<c:forEach var="tempCat" items="${AllCategories}">
-			${tempCat.categoryID} ${tempCat.categoryTitle} <br/>
-		</c:forEach>
 
+		<% //TODO why did it crash? %>
+		<select name="category">
+			<c:forEach var="tempCat" items="${AllCategories}">
+				<option value="${tempCat.categoryID}">${tempCat.categoryTitle}</option>
+			</c:forEach>
+		</select>
 
 
 		<% /* use tinymce */ %>

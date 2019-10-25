@@ -43,10 +43,13 @@
 		<% CategoryDAO catDAO = new CategoryDAO();
 		request.setAttribute("AllCategories", catDAO.SelectAllCatagories());
 		%>
-		<c:forEach var="tempCat" items="${AllCategories}">
-			${tempCat.categoryID} ${tempCat.categoryTitle} <br/>
-		</c:forEach>
 
+		<% //TODO why did it crash? %>
+		<select name="category">
+			<c:forEach var="tempCat" items="${AllCategories}">
+				<option value="${tempCat.categoryID}">${tempCat.categoryTitle}</option>
+			</c:forEach>
+		</select>
 
 
 		<% /* use tinymce */ %>
