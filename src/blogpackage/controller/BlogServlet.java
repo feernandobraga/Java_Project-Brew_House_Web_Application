@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.spi.FileSystemProvider;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -23,6 +24,8 @@ public class BlogServlet extends HttpServlet {
     private  static final long serialVersionUID =1L;
     private CategoryDAO catDAO;
     private BlogPostDAO postDAO;
+
+
 
 ///BrewHouseBlog_war_exploded
 
@@ -86,6 +89,8 @@ public class BlogServlet extends HttpServlet {
 
                 case "selectAllCategories":
                     System.out.println("Servlet - selectAllCategories");
+                    getAllCategories(request,response);
+                    break;
 
                 default:
                     System.out.println("running the default from Servlet - switch(action)");
@@ -97,12 +102,12 @@ public class BlogServlet extends HttpServlet {
     } // end doPost
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         System.out.println("running doGet");
         doPost(request, response);
     }
 
     //Isaac
-    //TODO test
     private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         //create bean object
         BlogPost post = new BlogPost();
@@ -140,8 +145,7 @@ public class BlogServlet extends HttpServlet {
         }finally {
             System.out.println("attempted to send user to admin then home, both failed");
         }
-
-    }
+    } // END insert post
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String ctitle = request.getParameter("category");
@@ -152,9 +156,12 @@ public class BlogServlet extends HttpServlet {
 
     //Isaac
     //TODO currently testing in test.jsp
-    public void getAllCategories(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public void getAllCategories(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         CategoryDAO catDAO = new CategoryDAO();
-        request.setAttribute("displayCategories", catDAO);
+        request.setAttribute("displayCategories", catDAO.SelectAllCatagories());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("newpost.jsp");
+        dispatcher.forward(request, response);
+        FileSystemProvider pageContext = null;
     }
 
     private void editAboutUs(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
@@ -185,8 +192,4 @@ public class BlogServlet extends HttpServlet {
         request.setAttribute("displayPost", existingPost);
         dispatcher.forward(request, response);
     }
-
-
-
-
 } //end servlet

@@ -1,3 +1,4 @@
+<%@ page import="blogpackage.model.dao.CategoryDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +39,19 @@
 		post visible?<input type="checkbox" name="ticked" />
 
 
+		<% /* load data from db to dropdown menu*/%>
+		<% CategoryDAO catDAO = new CategoryDAO();
+		request.setAttribute("AllCategories", catDAO.SelectAllCatagories());
+		%>
+		<c:forEach var="tempCat" items="${AllCategories}">
+			${tempCat.categoryID} ${tempCat.categoryTitle} <br/>
+		</c:forEach>
+
+
+
+		<% /* use tinymce */ %>
 		<textarea id="default" name="content"></textarea>
+		<%----%>
 		<input type="submit" value="insert post">
 	</form>
 	<%--footer imported from footer.jsp--%>
