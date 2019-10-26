@@ -3,10 +3,7 @@ package blogpackage.model.dao;
 import blogpackage.model.bean.BlogPost;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.util.Calendar;
-
-import static org.junit.Assert.*;
 
 public class BlogPostDAOTest {
 
@@ -22,7 +19,7 @@ public class BlogPostDAOTest {
         post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));//insert the date
         post.setPostAuthor("T_Test");
         post.setPostContent("<p>Hello World</p>");
-        post.setPostVisable(true);
+        post.setPostVisible(true);
         post.category.setCategoryID(1);
 
         //display all inputs

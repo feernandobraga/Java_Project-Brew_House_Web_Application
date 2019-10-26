@@ -29,7 +29,7 @@ public class BlogPostDAO {
     protected Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DBURL, DBUsername, DBPassword);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,12 +91,12 @@ public class BlogPostDAO {
             preparedStatement = connection.prepareStatement(sql);
 
             /*ID - automatically created by mySQL*/
-            preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title");
-            preparedStatement.setObject(2, (blogPost.getPostDate()));	/*Date*/	System.out.println("inserted date");
-            preparedStatement.setString(3, blogPost.getPostAuthor());	/*Author*/	System.out.println("inserted Author");
-            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content");
-            preparedStatement.setBoolean(5, blogPost.getPostVisable()); /*Visible*/ System.out.println("inserted visabiltiy");
-            preparedStatement.setInt(6, blogPost.category.getCategoryID());		/*categoryID*/ System.out.println("inserted cat ID");
+            preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title : "+ blogPost.getPostTitle());
+            preparedStatement.setObject(2, (blogPost.getPostDate()));	/*Date*/	System.out.println("inserted date" + blogPost.getPostDate());
+            preparedStatement.setString(3, blogPost.getPostAuthor());	/*Author*/	System.out.println("inserted Author" + blogPost.getPostAuthor());
+            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content" + blogPost.getPostContent());
+            preparedStatement.setBoolean(5, blogPost.getPostVisible()); /*Visible*/ System.out.println("inserted visabiltiy " + blogPost.getPostVisible());
+            preparedStatement.setInt(6, blogPost.category.getCategoryID());		/*categoryID*/ System.out.println("inserted cat ID" + blogPost.category.getCategoryID());
 
             //execute the command
             preparedStatement.executeUpdate();

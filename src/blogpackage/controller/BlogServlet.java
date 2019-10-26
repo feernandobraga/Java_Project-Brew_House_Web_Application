@@ -113,43 +113,66 @@ public class BlogServlet extends HttpServlet {
         //create bean object
         BlogPost post = new BlogPost();
 
-        System.out.println(1);
+
 
         //TODO get values from jsp and put into the bean
+        System.out.print("getting title ");
         post.setPostTitle(request.getParameter("title"));
+        System.out.println("- got title ");
+
+        System.out.print("getting date ");
         post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));/*insert the date*/
+        System.out.println("- got date");
+
+        System.out.print("getting author ");
         post.setPostAuthor(request.getParameter("author"));
+        System.out.println("- got author");
+
+        System.out.print("getting content ");
         post.setPostContent(request.getParameter("content"));
+        System.out.println("- got content");
 
-        System.out.println(2);
         //check if the check box is ticked
+        System.out.print("getting visibility - is");
         boolean ticked = true;
-        if (request.getParameter("ticked").equals("checked")) { ticked = false; } else { ticked = true; }
-        post.setPostVisable(ticked);
-        System.out.println(3);
 
-        try {
-            System.out.println(Integer.parseInt(request.getParameter("category")));
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        //TODO check error
+        System.out.println(request.getParameter("ticked"));
 
+        //a hackaround
+            try {
+                if ((boolean) request.getParameter("ticked").equals("checked")) {
+                    System.out.print("true");
+                    ticked = true;
+                }
+        }        catch (NullPointerException e) {
+                ticked = false;
+                e.printStackTrace();
+                //e.getMessage();
+            }
+
+        post.setPostVisible(ticked);
+        System.out.println("- got visibility");
+
+        System.out.print("getting category ");
         int categoryId = 1;
         categoryId = Integer.parseInt(request.getParameter("category"));
-        
-        request.setAttribute("selectedCatId", categoryId);
+        post.category.setCategoryID(categoryId);
+        System.out.println("- got categoryID\n");
 
+        //request.setAttribute("selectedCatId", categoryId);
+        //System.out.print("- got date");
 
 
         post.displayPost();
 
         //insert into database - DAO works, check jUnit
-        System.out.println("inserting the post to database");
+        System.out.println("\n\ninserting the post to database");
         BlogPostDAO blogPDAO = new BlogPostDAO();
         blogPDAO.InsertPost(post);
 
         //redirect to admin page
-        System.out.println("redirecting the user to admin console");
+        System.out.println("redirecting the user to admin console else home");
 
         try {
             response.sendRedirect("admin.jsp");

@@ -36,7 +36,7 @@
 	<form action="/BlogServlet" method="post">
 		<input type="hidden" name="action" value="insertPost">
 		Post Title<input type="text" name="title" /></p>
-		post visible?<input type="checkbox" name="ticked" /> <br/>
+		post visible?<input type="checkbox" name="ticked" value="checked"/> <br/>
 
 
 		<% /* load data from db to dropdown menu*/
@@ -64,6 +64,4 @@
 
 	<jsp:include page="footer.jsp" />
 </body>
-
-
 </html>

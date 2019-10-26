@@ -1,14 +1,12 @@
 package blogpackage.model.bean;
 
-import java.time.LocalDate;
-
 public class BlogPost {
     private int postID;
     private String postTitle;
     private java.sql.Date postDate;
     private String postAuthor;
     private String postContent;
-    private boolean isPostVisable;
+    private boolean isPostVisible;
 
     // OLD "added categoryId and category Title by Lucy"
     // refactored to Category (allows to reuse already created code)
@@ -26,7 +24,7 @@ public class BlogPost {
         this.postDate = postDate;
         this.postAuthor = postAuthor;
         this.postContent = postContent;
-        this.isPostVisable = isPostVisible;
+        this.isPostVisible = isPostVisible;
 
         // set catergoy object
         this.category.setCategoryID(categoryId);
@@ -68,12 +66,12 @@ public class BlogPost {
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
-    public boolean getPostVisable() {
-        return isPostVisable;
+    public boolean getPostVisible() {
+        return isPostVisible;
     }
 
-    public void setPostVisable(boolean isTicked) {
-        this.isPostVisable = isPostVisable;
+    public void setPostVisible(boolean isTicked) {
+        this.isPostVisible = isPostVisible;
     }
 
     //displayALLToTerminal
@@ -84,7 +82,7 @@ public class BlogPost {
         System.out.println("date: "+ getPostDate());
         System.out.println("author: "+ getPostAuthor());
         System.out.println("content: "+ getPostContent());
-        System.out.println("visibility: "+ getPostVisable());
+        System.out.println("visibility: "+ getPostVisible());
         System.out.println("category ID: "+ category.getCategoryID());
         System.out.println();
     }
