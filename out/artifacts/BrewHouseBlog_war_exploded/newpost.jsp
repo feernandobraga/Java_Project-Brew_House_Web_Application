@@ -43,13 +43,13 @@
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Post Title </label>
-				<div class="col-sm-10">
+				<div class="col-sm-1">
 					<input type="text" name="title" class="form-control" placeholder="title"/>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-3">
+				<div class="col-1">
 					Set post visible <input type="checkbox" name="ticked" value="checked" />
 				</div>
 

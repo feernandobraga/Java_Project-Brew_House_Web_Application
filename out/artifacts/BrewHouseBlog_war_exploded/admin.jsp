@@ -43,10 +43,18 @@
         <input type="submit" name="action" value="Show all Posts"/>
         <input type="submit" name="action" value="openPosts">
         <input type="submit" name="action" value="test">
+
+        <% /*added by Isaac*/%>
+        <!-- THIS IS FOR EDITING THE POST, put this in the for loop-->
+        <% /*get the post id*/ %>
+    </form>
+    <form action="/BlogServlet" method="post">
+        <input type="hidden" name="action" value="createNewPost">
+        <input type="submit" name="action" value="create post">
     </form>
 
-    <!-- Lucy temp buttons for testing end-->
 
+    <!-- Lucy temp buttons for testing end-->
 
 
     <!--import footer from footer.jsp-->

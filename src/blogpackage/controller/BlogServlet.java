@@ -65,6 +65,15 @@ public class BlogServlet extends HttpServlet {
                     showPosts(request, response);
                     break;
 
+                case "createNewPost":
+                    openNewPost(request, response);
+                    System.out.println("\ncreate post - servlet\n");
+                    break;
+
+                case "insertPost":
+                    System.out.println("\ninsert post - servlet\n");
+                    insertPost(request,response);
+                    break;
                 //load individual post
                 case "/post":
                     loadPost(request, response);
@@ -80,14 +89,11 @@ public class BlogServlet extends HttpServlet {
                     System.out.println("running from /test2");
                     break;
 
-                case "insertPost":
-                    System.out.println("insert post - servlet");
-                    insertPost(request,response);
-                    break;
+
 
 
                 case "selectAllCategories":
-                    System.out.println("Servlet - selectAllCategories");
+                    System.out.println("\nselectAllCategories - Servlet \n");
                     getAllCategories(request,response);
                     break;
 
@@ -168,6 +174,10 @@ public class BlogServlet extends HttpServlet {
             response.sendRedirect("home.jsp");
         }
     } // END insert post
+
+    private void openNewPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        response.sendRedirect(request.getContextPath() + "/newpost.jsp");
+    }
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String ctitle = request.getParameter("category");
