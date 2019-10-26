@@ -134,35 +134,23 @@ public class BlogServlet extends HttpServlet {
 
         //check if the check box is ticked
         System.out.print("getting visibility - is");
-        boolean ticked = true;
+        String isBoxTicked = request.getParameter("ticked");
+        System.out.println("isBoxTicked: " + isBoxTicked);
+        if (isBoxTicked == null || isBoxTicked.length() == 0 || isBoxTicked.isBlank()) {
+            System.out.println("setting the post to true");
+            post.setPostVisible(true);
+        }else if(isBoxTicked.equals("checked")){
+            System.out.println("setting the post to false");
+            post.setPostVisible(false);
+        }
 
-        //TODO check error
-        System.out.println(request.getParameter("ticked"));
-
-        //a hackaround
-            try {
-                if ((boolean) request.getParameter("ticked").equals("checked")) {
-                    System.out.print("true");
-                    ticked = true;
-                }
-        }        catch (NullPointerException e) {
-                ticked = false;
-                e.printStackTrace();
-                //e.getMessage();
-            }
-
-        post.setPostVisible(ticked);
-        System.out.println("- got visibility");
+        System.out.println("- got visibility " + post.getPostVisible());
 
         System.out.print("getting category ");
         int categoryId = 1;
         categoryId = Integer.parseInt(request.getParameter("category"));
         post.category.setCategoryID(categoryId);
         System.out.println("- got categoryID\n");
-
-        //request.setAttribute("selectedCatId", categoryId);
-        //System.out.print("- got date");
-
 
         post.displayPost();
 

@@ -81,7 +81,7 @@ public class BlogPostDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String sql = "INSERT INTO post(postTitle, postDate, postAuthor, postContent,  postVisible, categoryId) VALUES (?,?,?,?,?,?);"; // TODO write sql insert command Error is on purpose so I don't forget what I was up to
+        String sql = "INSERT INTO post(postTitle, postDate, postAuthor, postContent,  postVisible, categoryId) VALUES (?,?,?,?,?,?);";
         //TODO write test to test insert and delete
 
         try {

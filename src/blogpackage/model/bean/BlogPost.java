@@ -13,7 +13,6 @@ public class BlogPost {
     public Category category = new Category();
 
     public BlogPost(){
-
     }
 
     //constructor for selectAllPosts in PostDAO
@@ -70,7 +69,7 @@ public class BlogPost {
         return isPostVisible;
     }
 
-    public void setPostVisible(boolean isTicked) {
+    public void setPostVisible(boolean isPostVisible) {
         this.isPostVisible = isPostVisible;
     }
 
