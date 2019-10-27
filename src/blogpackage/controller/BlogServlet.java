@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet(name = "BlogServlet", value = "/BlogServlet")
@@ -26,7 +27,8 @@ public class BlogServlet extends HttpServlet {
     private BlogPostDAO postDAO;
     private AdminDAO adminDAO;
     private static boolean isSession = false;
-
+   private String authorName = "annon";
+    private int postID; // used for edit
 ///BrewHouseBlog_war_exploded
 
     public BlogServlet(){
@@ -56,6 +58,7 @@ public class BlogServlet extends HttpServlet {
             }
         } // endif action == null
 
+        System.out.print("event triggered");
         try {
             switch (action) {
                 //add category
@@ -103,6 +106,16 @@ public class BlogServlet extends HttpServlet {
                 case "delete":
                     System.out.println("Servlet - delete()");
                     deletePost(request, response);
+                    break;
+
+                case "insertPost":
+                    System.out.println("\ninsert post - servlet\n");
+                    insertPost(request,response);
+                    break;
+
+                case "createNewPost":
+                    openNewPost(request, response);
+                    System.out.println("\ncreate post - servlet\n");
                     break;
 
                 default:
@@ -157,6 +170,10 @@ public class BlogServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    private void openNewPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        response.sendRedirect(request.getContextPath() + "/newpost.jsp");
+    }
+
     private void loadPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
         int id = Integer.parseInt((request.getParameter("id")));
         BlogPost existingPost = postDAO.selectPost(id);
@@ -183,6 +200,7 @@ public class BlogServlet extends HttpServlet {
 
         // store the parameter "username" that was passed through the form
         String username = request.getParameter("username");
+        this.authorName = username;
         System.out.println("Servlet - username passed: " + username);
 
         // store the parameter "password" that was passed through the form
@@ -225,6 +243,73 @@ public class BlogServlet extends HttpServlet {
         isSession = false;
     }
 
+    private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        //create bean object
+        BlogPost post = new BlogPost();
+
+        // get values from jsp and put into the bean
+        System.out.print("getting title ");
+        post.setPostTitle(request.getParameter("title"));
+        System.out.println("- got title ");
+
+        System.out.print("getting date ");
+        post.setPostDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));/*insert the date*/
+        System.out.println("- got date");
+
+        System.out.print("getting author ");
+        post.setPostAuthor(authorName); // changed, post is now associated with user
+        System.out.println("- got author");
+
+        System.out.print("getting content ");
+        post.setPostContent(request.getParameter("content"));
+        System.out.println("- got content");
+
+        //check if the check box is ticked
+        System.out.print("getting visibility - is");
+        String isBoxTicked = request.getParameter("ticked");
+        System.out.println("isBoxTicked: " + isBoxTicked);
+        if (isBoxTicked == null || isBoxTicked.length() == 0 || isBoxTicked.isBlank()) {
+            System.out.println("setting the post to true");
+            post.setPostVisible(true);
+        }else if(isBoxTicked.equals("checked")){
+            System.out.println("setting the post to false");
+            post.setPostVisible(false);
+        }
+
+        System.out.println("- got visibility " + post.getPostVisible());
+
+        System.out.print("getting category ");
+        int categoryId = 1;
+        categoryId = Integer.parseInt(request.getParameter("category"));
+        post.setCategoryId(categoryId);
+        System.out.println("- got categoryID\n");
+
+        post.displayPost();
+
+        //insert into database - DAO works, check jUnit
+        System.out.println("\n\ninserting the post to database");
+        BlogPostDAO blogPDAO = new BlogPostDAO();
+        blogPDAO.InsertPost(post);
+
+        //redirect to admin page
+        System.out.println("redirecting the user to admin console else home");
+
+        try {
+            response.sendRedirect("admin.jsp");
+        }catch (Exception e) {
+            response.sendRedirect("home.jsp");
+        }
+    } // END insert post
+
+    private void editPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        this.postID = Integer.parseInt(request.getParameter("PostID"));
+
+        HttpSession session = request.getSession();
+        session.setAttribute("postID", this.postID);
+
+        response.sendRedirect("editpost.jsp");
+
+    }
 
     private void deletePost(HttpServletRequest request, HttpServletResponse response) throws  ServletException, SQLException, IOException{
         System.out.println("Servlet - deletePost()");

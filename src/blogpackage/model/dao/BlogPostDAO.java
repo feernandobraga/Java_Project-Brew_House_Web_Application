@@ -74,7 +74,7 @@ public class BlogPostDAO {
             while(rs.next()) {
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+                java.sql.Date postDate = rs.getDate("postDate");
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");
@@ -93,6 +93,39 @@ public class BlogPostDAO {
         }
         return post;
     }
+
+    public void InsertPost(BlogPost blogPost) {
+        System.out.println("Inserting Post");
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "INSERT INTO post(postTitle, postDate, postAuthor, postContent,  postVisible, categoryId) VALUES (?,?,?,?,?,?);";
+
+        try {
+            System.out.println("connecting to DB - insertPost");
+            connection = getConnection(); // connect to db
+            System.out.println("inserting data into prepared statment");
+            preparedStatement = connection.prepareStatement(sql);
+
+            /*ID - automatically created by mySQL*/
+            preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title : "+ blogPost.getPostTitle());
+            preparedStatement.setObject(2, (blogPost.getPostDate()));	/*Date*/	System.out.println("inserted date" + blogPost.getPostDate());
+            preparedStatement.setString(3, blogPost.getPostAuthor());	/*Author*/	System.out.println("inserted Author" + blogPost.getPostAuthor());
+            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content" + blogPost.getPostContent());
+            preparedStatement.setBoolean(5, blogPost.getPostVisible()); /*Visible*/ System.out.println("inserted visabiltiy " + blogPost.getPostVisible());
+            preparedStatement.setInt(6, blogPost.getCategoryId());		/*categoryID*/ System.out.println("inserted cat ID" + blogPost.getCategoryId());
+
+            //execute the command
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            finallySQLException(connection, preparedStatement, resultSet);
+            e.printStackTrace();
+        }
+
+    } // end Insert
 
     // retrieve all posts and store it on an array list <BlogPost>
     public List <BlogPost> selectAllPosts(){
@@ -122,7 +155,7 @@ public class BlogPostDAO {
             while (rs.next()){
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+                java.sql.Date postDate = rs.getDate("postDate");
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");
@@ -178,7 +211,7 @@ public class BlogPostDAO {
             while (rs.next()){
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+                java.sql.Date postDate = rs.getDate("postDate");
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");
@@ -244,7 +277,7 @@ public class BlogPostDAO {
             while (rs.next()){
                 int postID = rs.getInt("postId");
                 String postTitle = rs.getString("postTitle");
-                String postDate = rs.getString("postDate");
+                java.sql.Date postDate = rs.getDate("postDate");
                 String postAuthor = rs.getString("postAuthor");
                 String postContent = rs.getString("postContent");
                 Boolean isPostVisible = rs.getBoolean("postVisible");

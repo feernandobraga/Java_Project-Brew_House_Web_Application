@@ -21,11 +21,13 @@
     <jsp:include page="header.jsp" />
     <%----%>
 
-
+<%/* commented out for testing purposes
     <c:choose>
 
         <c:when test="${sessionScope.username != null}">
+*/%>
             <%--If there's a session, display admin console--%>
+
             <div class="container">
 
                 <div class="row mt-5">
@@ -86,7 +88,7 @@
 
                     <!-- Menu col -->
                     <div class="col-3 mt-n5 ml-n5">
-                        <a href="BlogServlet?action=" class="btn btn-lg btn-info text-monospace mb-3 btn-block text-left"><i class="far fa-paper-plane mr-4"></i>NEW POST</a>
+                        <a href="BlogServlet?action=createNewPost" class="btn btn-lg btn-info text-monospace mb-3 btn-block text-left"><i class="far fa-paper-plane mr-4"></i>NEW POST</a>
                         <a href="BlogServlet?action=" class="btn btn-lg btn-info text-monospace mb-3 btn-block text-left"><i class="far fa-file mr-4"></i>NEW CATEGORY</a>
                         <a href="BlogServlet?action=" class="btn btn-lg btn-info text-monospace mb-3 btn-block text-left"><i class="far fa-edit mr-3"></i>EDIT ABOUT</a>
                         <a href="BlogServlet?action=logout" class="btn btn-lg btn-info text-monospace mb-3 btn-block text-left"><i class="fas fa-sign-out-alt mr-3"></i>LOGOUT</a>
@@ -96,10 +98,10 @@
                 </div> <!-- END of row-->
 
             </div> <!-- END of CONTAINER-->
-
+    <%/* commented out for testing purposes
         </c:when>
 
-        <c:otherwise> <%--When there is no session, display the login page--%>
+        <c:otherwise>*/%> <%--When there is no session, display the login page--%> <%/*
 
             <div class="text-center mt-5">
 
@@ -139,7 +141,7 @@
     </c:otherwise>
 
     </c:choose>
-
+    */%>
 
     </body>
 

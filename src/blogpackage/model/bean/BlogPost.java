@@ -1,12 +1,14 @@
 package blogpackage.model.bean;
 
+import java.sql.Date;
+
 public class BlogPost {
     private int postID;
     private String postTitle;
-    private String postDate;
+    private java.sql.Date postDate;
     private String postAuthor;
     private String postContent;
-    private boolean isPostVisable;
+    private boolean isPostVisible;
     private String postSummary;
 
     //added categoryId and category Title by Lucy
@@ -18,26 +20,26 @@ public class BlogPost {
     }
 
     //constructor for selectAllPosts in PostDAO WITH SUMMARY
-    public BlogPost(int postID, String postTitle, String postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle,
+    public BlogPost(int postID, String postTitle, java.sql.Date postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle,
                     String postSummary) {
         this.postID = postID;
         this.postTitle = postTitle;
         this.postDate = postDate;
         this.postAuthor = postAuthor;
         this.postContent = postContent;
-        this.isPostVisable = isPostVisable;
+        this.isPostVisible = isPostVisable;
         this.categoryId = categoryId;
         this.categoryTitle = categoryTitle;
         this.postSummary = postSummary;
     }
 
-    public BlogPost(int postID, String postTitle, String postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle) {
+    public BlogPost(int postID, String postTitle, java.sql.Date postDate, String postAuthor, String postContent, boolean isPostVisable, int categoryId, String categoryTitle) {
         this.postID = postID;
         this.postTitle = postTitle;
         this.postDate = postDate;
         this.postAuthor = postAuthor;
         this.postContent = postContent;
-        this.isPostVisable = isPostVisable;
+        this.isPostVisible = isPostVisable;
         this.categoryId = categoryId;
         this.categoryTitle = categoryTitle;
     }
@@ -60,10 +62,10 @@ public class BlogPost {
     public void setPostCategory(int postCategory) {
         this.postCategory = postCategory;
     }*/
-    public String getPostDate() {
+    public java.sql.Date getPostDate() {
         return postDate;
     }
-    public void setPostDate(String postDate) {
+    public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
     public String getPostAuthor() {
@@ -78,12 +80,7 @@ public class BlogPost {
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
-    public boolean isPostVisable() {
-        return isPostVisable;
-    }
-    public void setPostVisable(boolean isPostVisable) {
-        this.isPostVisable = isPostVisable;
-    }
+
 
     //Added categoryId getter and setter to display in showPosts.jsp
     public  int getCategoryId(){
@@ -93,6 +90,7 @@ public class BlogPost {
         this.categoryId = categoryId;
     }
     //Added categoryTitle getter and setter
+
     public String getCategoryTitle(){
         return  categoryTitle;
     }
@@ -108,4 +106,23 @@ public class BlogPost {
         this.postSummary = postSummary;
     }
 
+    public void setPostVisible(boolean isPostVisible) {
+        this.isPostVisible = isPostVisible;
+    }
+
+    public void displayPost() {
+
+        System.out.println("\n" + "displaypost");
+        System.out.println("Title: "+ getPostTitle());
+        System.out.println("date: "+ getPostDate());
+        System.out.println("author: "+ getPostAuthor());
+        System.out.println("content: "+ getPostContent());
+        System.out.println("visibility: "+ getPostVisible());
+        System.out.println("category ID: "+ getCategoryId());
+        System.out.println();
+    }
+
+    public boolean getPostVisible() {
+    return isPostVisible;
+    }
 }

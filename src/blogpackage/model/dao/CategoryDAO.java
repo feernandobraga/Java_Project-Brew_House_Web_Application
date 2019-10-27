@@ -48,7 +48,7 @@ public class CategoryDAO {
         try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(INSERTCATSQL);
-            preparedStatement.setString(1, cat.getCname());
+            preparedStatement.setString(1, cat.getCategoryTitle());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
 
@@ -87,6 +87,44 @@ public class CategoryDAO {
         }
         return  cat;
     }
+
+    public List<Category> SelectAllCategories() {
+        System.out.println("selecting all categories");
+        // vars
+        List<Category> allCat = new ArrayList<Category>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT * FROM category";
+
+        try {
+            connection = getConnection(); // connect to db
+
+            // commit select * statement
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            // transfer results to bean
+            System.out.println("retreiving results from query");
+            while(resultSet.next()) {
+                //
+                Category catagory = new Category();
+                catagory.setCategoryID(resultSet.getInt("categoryID"));
+                catagory.setCategoryTitle(resultSet.getString("categoryTitle"));
+
+                //add bean to list
+                allCat.add(catagory);
+            }
+
+
+            finallySQLException(connection, preparedStatement, resultSet);
+            return allCat;
+        } catch (SQLException e) {
+            finallySQLException(connection, preparedStatement, resultSet);
+            e.printStackTrace();
+            return null;
+        }
+    } // end SelectAllCatagories
 
     //insert about us sql connection and statement
     public void insertAboutUs(AboutUs about) throws SQLException {
