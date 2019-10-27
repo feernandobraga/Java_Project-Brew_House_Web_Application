@@ -21,11 +21,11 @@
     <jsp:include page="header.jsp" />
     <%----%>
 
-<%/* commented out for testing purposes
+
     <c:choose>
 
         <c:when test="${sessionScope.username != null}">
-*/%>
+
             <%--If there's a session, display admin console--%>
 
             <div class="container">
@@ -98,16 +98,16 @@
                 </div> <!-- END of row-->
 
             </div> <!-- END of CONTAINER-->
-    <%/* commented out for testing purposes
+
         </c:when>
 
-        <c:otherwise>*/%> <%--When there is no session, display the login page--%> <%/*
+        <c:otherwise> <%--When there is no session, display the login page--%>
 
             <div class="text-center mt-5">
 
                 <form class="w-25 mx-auto" action="/BlogServlet" method="POST">
 
-                        <span style="font-size: 13em;">
+                        <%--@declare id="username"--%><%--@declare id="password"--%><span style="font-size: 13em;">
                           <i class="fas fa-beer ml-5"></i>
                         </span>
 
@@ -141,7 +141,7 @@
     </c:otherwise>
 
     </c:choose>
-    */%>
+
 
     </body>
 

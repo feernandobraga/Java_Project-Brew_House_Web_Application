@@ -105,7 +105,7 @@ public class CategoryDAO {
             resultSet = preparedStatement.executeQuery();
 
             // transfer results to bean
-            System.out.println("retreiving results from query");
+            System.out.println("retrieving results from query");
             while(resultSet.next()) {
                 //
                 Category catagory = new Category();

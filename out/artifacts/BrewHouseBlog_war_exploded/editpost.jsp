@@ -49,7 +49,8 @@
 			}
 			BlogPostDAO blogPostDAO = new BlogPostDAO();
 			BlogPost blogpost = blogPostDAO.selectPost((Integer) session.getAttribute("postID"));
-			
+			request.setAttribute("title", blogpost.getPostTitle());
+			request.setAttribute("content", blogpost.getPostContent());
 		%>
 
 

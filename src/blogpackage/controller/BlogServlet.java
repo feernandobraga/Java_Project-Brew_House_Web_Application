@@ -113,6 +113,15 @@ public class BlogServlet extends HttpServlet {
                     insertPost(request,response);
                     break;
 
+                case "edit":
+                    System.out.println("\nupdatePost  - servlet\n");
+                    editPost(request, response);
+                    break;
+
+                case "updatePost":
+                    updatePost(request, response);
+                    break;
+
                 case "createNewPost":
                     openNewPost(request, response);
                     System.out.println("\ncreate post - servlet\n");
@@ -129,6 +138,46 @@ public class BlogServlet extends HttpServlet {
             throw new ServletException(ex);
         } // end try
     } // end doPost
+
+    private void updatePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BlogPostDAO bpdao = new BlogPostDAO();
+        BlogPost post = new BlogPost();
+
+        //TODO Add stuff from editPost
+        // get values from jsp and put into the bean
+        System.out.print("getting title ");
+        post.setPostTitle(request.getParameter("title"));
+        System.out.println("- got title ");
+
+        System.out.print("getting content ");
+        post.setPostContent(request.getParameter("content"));
+        System.out.println("- got content");
+
+        //check if the check box is ticked
+        System.out.print("getting visibility - is");
+        String isBoxTicked = request.getParameter("ticked");
+        System.out.println("isBoxTicked: " + isBoxTicked);
+        if (isBoxTicked == null || isBoxTicked.length() == 0 || isBoxTicked.isBlank()) {
+            System.out.println("setting the post to true");
+            post.setPostVisible(true);
+        }else if(isBoxTicked.equals("checked")){
+            System.out.println("setting the post to false");
+            post.setPostVisible(false);
+        }
+        System.out.println("- got visibility " + post.getPostVisible());
+
+        System.out.print("getting category ");
+        int categoryId = 1;
+        categoryId = Integer.parseInt(request.getParameter("category"));
+        post.setCategoryId(categoryId);
+        System.out.println("- got categoryID\n");
+
+        post.displayPost();
+
+        //4
+        bpdao.updatePost(postID, post);
+        response.sendRedirect("admin.jsp");
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("running doGet");

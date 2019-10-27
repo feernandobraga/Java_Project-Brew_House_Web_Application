@@ -107,7 +107,7 @@
 
                 <form class="w-25 mx-auto" action="/BlogServlet" method="POST">
 
-                        <span style="font-size: 13em;">
+                        <%--@declare id="username"--%><%--@declare id="password"--%><span style="font-size: 13em;">
                           <i class="fas fa-beer ml-5"></i>
                         </span>
 

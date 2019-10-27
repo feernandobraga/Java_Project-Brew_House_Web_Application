@@ -304,6 +304,31 @@ public class BlogPostDAO {
 
     } // end selectAllPostsWhere
 
+    public void updatePost(int postID, BlogPost blogPost) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "UPDATE post " +
+                "SET postTitle = ?, postContent = ?, postVisible = ?,  categoryId = ?" +
+                " WHERE postId = ?";
+        try {
+            connection = getConnection();
+            preparedStatement.setString(1, blogPost.getPostTitle());
+
+            preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title : "+ blogPost.getPostTitle());
+            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content" + blogPost.getPostContent());
+            preparedStatement.setBoolean(5, blogPost.getPostVisible()); /*Visible*/ System.out.println("inserted visabiltiy " + blogPost.getPostVisible());
+            preparedStatement.setInt(6, blogPost.getCategoryId());		/*categoryID*/ System.out.println("inserted cat ID" + blogPost.getCategoryId());
+
+            //execute command
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            finallySQLException(connection,preparedStatement,resultSet);
+        } //end try/catch/finally
+
+    }
 
     public boolean deletePost(int postid) throws SQLException{
         System.out.println("BlogPostDAO - deletePost()");
@@ -330,7 +355,6 @@ public class BlogPostDAO {
 
         return isPostDeleted;
 
-
     }
 
 
@@ -355,17 +379,19 @@ public class BlogPostDAO {
         }
     }
 
-    private void finallySQLException(Connection c, PreparedStatement p, ResultSet r){
+    private void finallySQLException(Connection c, PreparedStatement p, ResultSet r) {
         if (r != null) {
             try {
                 r.close();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             r = null;
         }
         if (p != null) {
             try {
                 p.close();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             p = null;
         }
         if (c != null) {

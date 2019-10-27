@@ -55,7 +55,7 @@
 
 
 		<form action="/BlogServlet" method="post">
-			<input type="hidden" name="action" value="insertPost">
+			<input type="hidden" name="action" value="updatePost"> <% /*post*/ %>
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Post Title </label>
