@@ -313,13 +313,12 @@ public class BlogPostDAO {
                 " WHERE postId = ?";
         try {
             connection = getConnection();
-            preparedStatement.setString(1, blogPost.getPostTitle());
 
             preparedStatement.setString(1, blogPost.getPostTitle()); 	/*title*/ System.out.println("inserted Title : "+ blogPost.getPostTitle());
-            preparedStatement.setString(4, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content" + blogPost.getPostContent());
-            preparedStatement.setBoolean(5, blogPost.getPostVisible()); /*Visible*/ System.out.println("inserted visabiltiy " + blogPost.getPostVisible());
-            preparedStatement.setInt(6, blogPost.getCategoryId());		/*categoryID*/ System.out.println("inserted cat ID" + blogPost.getCategoryId());
-
+            preparedStatement.setString(2, blogPost.getPostContent()); /*Content*/ System.out.println("inserted Content" + blogPost.getPostContent());
+            preparedStatement.setBoolean(3, blogPost.getPostVisible()); /*Visible*/ System.out.println("inserted visabiltiy " + blogPost.getPostVisible());
+            preparedStatement.setInt(4, blogPost.getCategoryId());		/*categoryID*/ System.out.println("inserted cat ID" + blogPost.getCategoryId());
+            preparedStatement.setInt(5, postID);
             //execute command
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
