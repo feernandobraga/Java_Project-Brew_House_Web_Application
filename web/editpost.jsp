@@ -40,7 +40,7 @@
 
 	<div class="container">
 		<div class="page-header">
-			<h1>Insert a new post</h1>
+			<h1>UPDATE A POST</h1>
 		</div>
 
 		<% /*getting the post*/

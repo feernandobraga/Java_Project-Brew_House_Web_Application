@@ -71,9 +71,13 @@ public class BlogPost {
     public String getPostAuthor() {
         return postAuthor;
     }
+
     public void setPostAuthor(String postAuthor) {
+        System.out.println("getting postAuthor");
+        if (postAuthor.isBlank() || postAuthor.isEmpty()) {postAuthor = "annon";}
         this.postAuthor = postAuthor;
     }
+
     public String getPostContent() {
         return postContent;
     }
