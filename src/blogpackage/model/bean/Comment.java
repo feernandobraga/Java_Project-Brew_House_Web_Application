@@ -2,7 +2,7 @@ package blogpackage.model.bean;
 
 public class Comment {
 
-    protected int commentID;
+    private int commentID;
     protected String commentOwner;
     protected String commentContent;
 

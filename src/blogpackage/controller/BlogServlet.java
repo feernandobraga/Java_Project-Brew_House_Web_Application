@@ -142,6 +142,7 @@ public class BlogServlet extends HttpServlet {
                     deletePost(request, response);
                     break;
 
+
                 case "insertPost":
                     System.out.println("\ninsert post - servlet\n");
                     insertPost(request,response);
