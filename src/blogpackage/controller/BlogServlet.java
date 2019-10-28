@@ -1,12 +1,7 @@
 package blogpackage.controller;
 
-import blogpackage.model.bean.AboutUs;
-import blogpackage.model.bean.Admin;
-import blogpackage.model.bean.BlogPost;
-import blogpackage.model.bean.Category;
-import blogpackage.model.dao.AdminDAO;
-import blogpackage.model.dao.BlogPostDAO;
-import blogpackage.model.dao.CategoryDAO;
+import blogpackage.model.bean.*;
+import blogpackage.model.dao.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +18,14 @@ import java.util.List;
 @WebServlet(name = "BlogServlet", value = "/BlogServlet")
 public class BlogServlet extends HttpServlet {
     private  static final long serialVersionUID =1L;
+
+    //DAO objects
+    private CommentDAO cmmtDAO;
     private CategoryDAO catDAO;
     private BlogPostDAO postDAO;
     private AdminDAO adminDAO;
+    private AboutUsDAO aboutDAO;
+
     private static boolean isSession = false;
    private String authorName = "annon";
     private int postID; // used for edit
@@ -35,6 +35,7 @@ public class BlogServlet extends HttpServlet {
         adminDAO = new AdminDAO();
         catDAO = new CategoryDAO();
         postDAO = new BlogPostDAO();
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

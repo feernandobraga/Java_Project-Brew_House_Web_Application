@@ -13,6 +13,12 @@ public class Comment {
         this.commentContent = commentContent;
     }
 
+    public Comment(String commentOwner, String commentContent, int postId) {
+        this.commentOwner = commentOwner;
+        this.commentContent = commentContent;
+        this.commentID = commentID;
+    }
+
     // getters and setters
     public int getCommentID() {
         return commentID;

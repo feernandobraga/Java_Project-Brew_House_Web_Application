@@ -19,7 +19,7 @@ public class CategoryDAO {
     private String SELECTALLCATS = "SELECT * FROM category;";
     private String UPDATEABOUTSQL = "UPDATE aboutUs SET description=" + " (?) WHERE descId=1;";
     private String SELECTDESCSQL = "SELECT * FROM aboutUs;";
-
+    private String DELETECATSQL = "DELETE from category WHERE categoryId=?;";
     //constructor
     public CategoryDAO() {}
 
@@ -174,6 +174,50 @@ public class CategoryDAO {
             finallySQLException(connection,preparedStatement,rs);
         }
         return  about;
+    }
+
+    public List<Category> selectCategory() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        List<Category> cat = new ArrayList<>();
+
+        // using try-with-resources to avoid closing resources (boilerplate code)
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(SELECTALLCATS);
+            System.out.println(preparedStatement);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int catId = rs.getInt("categoryId");
+                String catTitle = rs.getString("categoryTitle");
+                cat.add(new Category(catId, catTitle));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        } finally {
+            finallySQLException(connection, preparedStatement, rs);
+        }
+        return cat;
+    }
+
+    public boolean deleteCategory(int id) throws SQLException {
+        boolean catDeleted = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement =
+                    connection.prepareStatement(DELETECATSQL);
+            preparedStatement.setInt(1, id);
+            catDeleted = preparedStatement.executeUpdate() > 0 ?
+                    true : false;
+        } finally {
+            finallySQLException(connection, preparedStatement, null);
+        }
+        return catDeleted;
     }
 
     //catch sql message when error occurs

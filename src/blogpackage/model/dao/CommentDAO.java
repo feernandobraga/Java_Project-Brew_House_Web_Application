@@ -10,7 +10,8 @@ public class CommentDAO {
     private String DBURL = "jdbc:mysql://localhost:3306/BlogDB?serverTimezone=Australia/Sydney";
     private String DBUsername = "root";
     private String DBPassword = "mysql123";
-
+    private String DELETECMMTPSQL = "DELETE from comment WHERE cmmtId=?;";
+    private String INSERTCMMTSQL = "INSERT INTO comment (cmmtOwner, comment, postId) VALUES " + " (?, ?, ?);";
     // constructor
     public CommentDAO() {
     }
@@ -31,6 +32,64 @@ public class CommentDAO {
 
         return connection;
     } // end getConnection
+
+    public void insertComment(Comment cmmt) throws SQLException {
+        System.out.println(INSERTCMMTSQL);
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        // try-with-resource statement will auto close the connection.
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERTCMMTSQL);
+            preparedStatement.setString(1, cmmt.getCommentOwner());
+            preparedStatement.setString(2, cmmt.getCommentContent());
+            preparedStatement.setInt(3, cmmt.getCommentID());
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        } finally {
+            finallySQLException(connection, preparedStatement, null);
+        }
+    }
+
+    public boolean deleteComment(int id) throws SQLException {
+        boolean cmmtDeleted = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            preparedStatement =
+                    connection.prepareStatement(DELETECMMTPSQL);
+            preparedStatement.setInt(1, id);
+            cmmtDeleted = preparedStatement.executeUpdate() > 0 ?
+                    true : false;
+        } finally {
+            finallySQLException(connection, preparedStatement, null);
+        }
+        return cmmtDeleted;
+    }
+
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException)
+                        e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException)
+                        e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
+        }
+    }
 
     //method to close DB connection
     private void finallySQLException(Connection c, PreparedStatement p, ResultSet r) {

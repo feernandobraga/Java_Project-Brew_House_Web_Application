@@ -95,6 +95,8 @@ public class AdminDAO {
 
     }
 
+
+
     //method to close DB connection
     private void finallySQLException(Connection c, PreparedStatement p, ResultSet r) {
         System.out.println("DAO Admin - closing connections");

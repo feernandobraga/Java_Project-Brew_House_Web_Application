@@ -11,6 +11,8 @@ public class AboutUsDAO {
     private String DBUsername = "root";
     private String DBPassword = "mysql123";
 
+    private String SELECTABOUTSQL = "SELECT descId, description FROM aboutUs WHERE descId=?;";
+
     //constructor
     public AboutUsDAO() {
     }
@@ -31,7 +33,52 @@ public class AboutUsDAO {
 
         return connection;
     } // end getConnection
+    public AboutUs showAboutUs(int Did) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        AboutUs about = null;
+        ResultSet rs = null;
 
+        // try-with-resource statement will auto close the connection.
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(SELECTABOUTSQL);
+            preparedStatement.setInt(1, Did);
+            System.out.println(preparedStatement);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int descId = rs.getInt("descId");
+                String desc = rs.getString("description");
+                about = new AboutUs(descId, desc);
+            }
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        } finally {
+            finallySQLException(connection, preparedStatement, rs);
+        }
+
+        return about;
+    }
+
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException)
+                        e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException)
+                        e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
+        }
+    }
 
     //method to close DB connection
     private void finallySQLException(Connection c, PreparedStatement p, ResultSet r) {
