@@ -324,7 +324,7 @@ public class BlogServlet extends HttpServlet {
         System.out.println("categoryID: " + post.getCategoryId());
         System.out.println("insert post - finished collecting data from jsp" + "\u001B[0m");
         } catch (NullPointerException e) {
-            
+
             try {
                 response.sendRedirect("admin.jsp");
             }catch (Exception ee) {
