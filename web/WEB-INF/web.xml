@@ -13,5 +13,9 @@
         <servlet-name>BlogServlet</servlet-name>
         <url-pattern>/BlogServlet</url-pattern>
     </servlet-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>BlogServlet</welcome-file>
+    </welcome-file-list>
 
 </web-app>

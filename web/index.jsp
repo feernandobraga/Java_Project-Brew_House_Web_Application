@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: fernandobraga
@@ -23,18 +24,7 @@
         <jsp:include page="header.jsp" />
         <%----%>
 
-          <form action="/BlogServlet" method="post">
-            <input type="hidden" name="action" value="test2">
-            <input type="submit" value="run test">
-          </form>
-
-
-          <form action="/BlogServlet" method="post">
-              <input type="hidden" name="action" value="test">
-              <input type="submit" value="run test()">
-          </form>
-
-          <img src="images/flower.png">
+        <c:redirect url = "BlogServlet"/>
 
         <%--footer imported from footer.jsp--%>
         <jsp:include page="footer.jsp" />
