@@ -62,18 +62,26 @@ public class BlogServlet extends HttpServlet {
         try {
             switch (action) {
                 //add category
-                case "/addCat":
+                case "addCat":
                     insertCategory(request, response);
+                    System.out.println("BlogServlet - switch: addCat executed");
                     break;
 
-                //edit about us
-                case "/editAbout":
-                    editAboutUs(request,response);
+                case "delCat":
+                    delCategory(request, response);
+                    System.out.println("BlogServlet - switch: delCat executed");
+
+
+                    //edit about us
+                case "editAbout":
+                    editAboutUs(request, response);
+                    System.out.println("BlogServlet - switch: editAbout executed");
                     break;
 
                 //load about us page
-                case "/showAbout":
+                case "showAbout":
                     showAboutUs(request, response);
+                    System.out.println("BlogServlet - switch: showAbout executed");
                     break;
 
                 //load list of posts
@@ -86,6 +94,31 @@ public class BlogServlet extends HttpServlet {
                 case "post":
                     loadPost(request, response);
                     break;
+
+                //show category added
+                case "showCategories":
+                    showCategory(request, response);
+                    System.out.println("BlogServlet - switch: showCategory executed");
+                    break;
+
+                //add comment added
+                case "addCmmt":
+                    insertComment(request, response);
+                    System.out.println("BlogServlet - switch: addCmmt executed");
+                    break;
+
+                //delete comment added
+                case "delCmmt":
+                    delComment(request, response);
+                    System.out.println("BlogServlet - switch: delCmmt executed");
+                    break;
+
+                //open edit about us added
+                case "openEditAbout":
+                    showEditAboutUs(request, response);
+                    System.out.println("BlogServlet - switch: openEditAbout executed");
+                    break;
+
 
                 //button search on header
                 case "search":
@@ -139,6 +172,11 @@ public class BlogServlet extends HttpServlet {
         } // end try
     } // end doPost
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("running doGet");
+        doPost(request, response);
+    }
+
     private void updatePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BlogPostDAO bpdao = new BlogPostDAO();
         BlogPost post = new BlogPost();
@@ -177,11 +215,6 @@ public class BlogServlet extends HttpServlet {
         //4
         bpdao.updatePost(postID, post);
         response.sendRedirect("admin.jsp");
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("running doGet");
-        doPost(request, response);
     }
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -366,9 +399,45 @@ public class BlogServlet extends HttpServlet {
         response.sendRedirect("BlogServlet?action=login");
     }
 
-
-    private void showCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-
+    private void insertComment(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        String cOwner = request.getParameter("cmmtOwner");
+        String cmmt = request.getParameter("cmmt");
+        int pId = Integer.parseInt(request.getParameter("id"));
+        Comment c = new Comment(cOwner.trim(), cmmt.trim(), pId);
+        cmmtDAO.insertComment(c);
+        System.out.println("BlogServlet - loadPost executed" + c);
+        response.sendRedirect("/BlogServlet?action=post&id=" + pId);
     }
 
+    //deleteComment function added
+    private void delComment(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int pId = Integer.parseInt(request.getParameter("Pid"));
+        cmmtDAO.deleteComment(id);
+        System.out.println("deleted comment id = " + id + "post id = " + pId);
+        response.sendRedirect("/BlogServlet?action=post&id=" + pId);
+    }
+
+    private void delCategory(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        catDAO.deleteCategory(id);
+        System.out.println("deleted comment id = " + id);
+        response.sendRedirect("/BlogServlet?action=showCategories");
+    }
+
+    private void showCategory(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        List<Category> cat = catDAO.selectCategory();
+        request.setAttribute("showCategories", cat);
+        System.out.println("BlogServlet - showCategory executed");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("category.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void showEditAboutUs(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int id = 1;
+        AboutUs showAbout = aboutDAO.showAboutUs(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("category.jsp");
+        request.setAttribute("aboutus", showAbout);
+        dispatcher.forward(request, response);
+    }
 } //end servlet
