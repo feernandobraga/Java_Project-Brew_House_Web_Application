@@ -236,15 +236,7 @@ public class BlogServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-/*    //load each individual post
-    private void loadPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-        int id = Integer.parseInt((request.getParameter("id")));
-        BlogPost existingPost = postDAO.selectPost(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("post.jsp");
-        request.setAttribute("displayPost", existingPost);
-        dispatcher.forward(request, response);
-    }*/
-
+    // fetches an individual post and category
     private void loadPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt((request.getParameter("id")));
         BlogPost existingPost = postDAO.selectPost(id);
@@ -364,7 +356,6 @@ public class BlogServlet extends HttpServlet {
         //create bean object
         BlogPost post = new BlogPost();
 
-        //TODO get values from jsp and put into the bean
         System.out.print("getting title ");
         post.setPostTitle(request.getParameter("title"));
         System.out.println("- got title ");
